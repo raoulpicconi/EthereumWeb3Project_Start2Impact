@@ -31,7 +31,9 @@ function Header() {
           <div className="flex justify-around items-center">
             <ul
               onClick={() => {
-                changeVisibility()
+                if (hiddenMenu == "") {
+                  changeVisibility()
+                }
               }}
               className={`h-1/2 ${
                 hiddenMenu == "" && "w-screen"
