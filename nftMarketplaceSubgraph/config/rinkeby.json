@@ -1,0 +1,7 @@
+{
+  "network": "rinkeby",
+  "nftMarketplaceAddress": "0x6B13254a9969aFF41FFbB6EC1CE324f510d4ba80",
+  "nftMarketplaceStartBlock": 11282591,
+  "erc721FactoryAddress": "0x7E18CeE8621726E7C166A88002B449E53107AFDe",
+  "erc721FactoryStartBlock": 11381367
+}

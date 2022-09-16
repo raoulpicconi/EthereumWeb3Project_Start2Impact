@@ -1,0 +1,7 @@
+{
+  "network": "goerli",
+  "nftMarketplaceAddress": "0xefeB31367A16e1CEfc33Aca1ec0ad22147ACd9fB",
+  "nftMarketplaceStartBlock": 7545560,
+  "erc721FactoryAddress": "0x18973D05940DfcdEe5411201aC9d907bDB56A82d",
+  "erc721FactoryStartBlock": 7593165
+}

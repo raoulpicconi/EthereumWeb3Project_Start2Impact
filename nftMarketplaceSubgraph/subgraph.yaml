@@ -1,0 +1,53 @@
+# prettier-ignore
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: NftMarketplace
+    network: goerli
+    source:
+      address: '0xefeB31367A16e1CEfc33Aca1ec0ad22147ACd9fB'
+      abi: NftMarketplace
+      startBlock: 7545560
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ItemBought
+        - ItemCanceled
+        - ItemListed
+      abis:
+        - name: NftMarketplace
+          file: ./abis/NftMarketplace.json
+      eventHandlers:
+        - event: ItemBought(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleItemBought
+        - event: ItemCanceled(indexed address,indexed address,indexed uint256)
+          handler: handleItemCanceled
+        - event: ItemListed(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleItemListed
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: ./src/nft-marketplace.ts
+  - kind: ethereum
+    name: ERC721Factory
+    network: goerli
+    source:
+      address: '0x18973D05940DfcdEe5411201aC9d907bDB56A82d'
+      abi: ERC721Factory
+      startBlock: 7593165
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - NftContractCreated
+      abis:
+        - name: ERC721Factory
+          file: ./abis/ERC721Factory.json
+      eventHandlers:
+        - event: NftContractCreated(string,string,uint256,address,address)
+          handler: handleNftContractCreated
+      file: ./src/erc-721-factory.ts

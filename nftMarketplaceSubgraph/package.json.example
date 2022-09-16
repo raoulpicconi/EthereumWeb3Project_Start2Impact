@@ -1,0 +1,24 @@
+{
+  "name": "nftmarketplace",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "prepare:rinkeby": "mustache config/rinkeby.json subgraph.template.yaml > subgraph.yaml && graph auth --studio ADD_YOUR_KEY",
+    "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml && graph auth --product hosted-service ADD_YOUR_KEY",
+    "deploy:rinkeby": "graph deploy --studio nftmarketplace",
+    "deploy:goerli": "graph deploy --product hosted-service raoulpicconi/nftmarketplace",
+    "create-local": "graph create --node http://localhost:8020/ nftmarketplace",
+    "remove-local": "graph remove --node http://localhost:8020/ nftmarketplace",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 nftmarketplace",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.33.0",
+    "@graphprotocol/graph-ts": "0.27.0",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "matchstick-as": "0.5.0"
+  }
+}
