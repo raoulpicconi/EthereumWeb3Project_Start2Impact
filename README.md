@@ -1,7 +1,7 @@
 # DEX NFT
 
 This is a little PoC of a fully decentralized NFT marketplace. The web app allows you to login with Metamask or Brave wallet, select the chain (2 testnet supported at the moment) sell, buy, mint NFT and create a new ERC721(the NFT standard) contract without writing a single line of code. The project doesn't have a backend to maintain the decentralization but uses the graph protocol to index the blockchain events and retrieve the marketplace data.
-This website is stored on ipfs and can be found at this [link](ipfs://QmNyh6KqsChL4WRuZVoqn7BaWyAaTqVhp6x8J7tAAi1bvZ).
+This website is stored on ipfs and can be found at this [link](https://ipfs.io/ipfs/QmNyh6KqsChL4WRuZVoqn7BaWyAaTqVhp6x8J7tAAi1bvZ).
 
 ## Project folder
 
