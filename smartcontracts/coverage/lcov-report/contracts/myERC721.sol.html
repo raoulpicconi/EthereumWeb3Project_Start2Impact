@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">71.43% </span>
+        <span class="strong">80% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/7</span>
+        <span class='fraction'>8/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">66.67% </span>
@@ -35,13 +35,13 @@
         <span class='fraction'>4/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">71.43% </span>
+        <span class="strong">72.73% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>5/7</span>
+        <span class='fraction'>8/11</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -89,7 +89,18 @@
 44
 45
 46
-47</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -106,7 +117,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -129,11 +145,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">110×</span>
+<span class="cline-any cline-yes">110×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8×</span>
-<span class="cline-any cline-yes">8×</span>
-<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: MIT
 &nbsp;
@@ -142,11 +164,16 @@ pragma solidity ^0.8.7;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 &nbsp;
-contract myERC721 is ERC721URIStorage, ERC721Enumerable{
+error myERC721__ReachedMaxSupply();
+&nbsp;
+contract myERC721 is ERC721URIStorage, ERC721Enumerable, Ownable{
 &nbsp;
     using SafeMath for uint256;
     uint public constant mintPrice = 0;
+&nbsp;
+    uint256 immutable i_maxSupply;
 &nbsp;
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
         internal
@@ -174,10 +201,16 @@ contract myERC721 is ERC721URIStorage, ERC721Enumerable{
 <span class="cstat-no" title="statement not covered" >        return super.supportsInterface(interfaceId);</span>
     }
     
-    constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol){}
+    constructor(string memory _name, string memory _symbol, uint256 _maxSupply, address owner) ERC721(_name, _symbol){
+        i_maxSupply = _maxSupply;
+        transferOwnership(owner);
+    }
     
-    function mint(string memory _uri) public payable {
+    function mint(string memory _uri) public payable onlyOwner() {
         uint256 mintIndex = totalSupply();
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(mintIndex &gt;= i_maxSupply) {
+            revert myERC721__ReachedMaxSupply();
+        }
         _safeMint(msg.sender, mintIndex);
         _setTokenURI(mintIndex, _uri);
     }
@@ -187,7 +220,7 @@ contract myERC721 is ERC721URIStorage, ERC721Enumerable{
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Aug 27 2022 01:37:24 GMT+0200 (Ora legale dell’Europa centrale)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Sep 17 2022 12:00:20 GMT+0200 (Ora legale dell’Europa centrale)
 </div>
 </div>
 <script src="../prettify.js"></script>

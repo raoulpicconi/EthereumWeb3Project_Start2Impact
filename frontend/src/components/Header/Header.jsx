@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom"
+import { HashRouter as Router, Route, Link, Routes } from "react-router-dom"
 import Homepage from "../Home/Homepage"
 import Marketplace from "../Marketplace/Marketplace"
 import Userpage from "../User/Userpage"
